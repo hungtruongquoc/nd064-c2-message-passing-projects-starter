@@ -7,8 +7,8 @@ metadata:
 spec:
   ports:
   - name: "5000"
-    port: 5001
-    targetPort: 5001
+    port: 5000
+    targetPort: 5000
     nodePort: 30002
   selector:
     service: person-service
@@ -31,7 +31,7 @@ spec:
         service: person-service
     spec:
       containers:
-      - image: hungtruongquoc/person_service:v1.0
+      - image: hungtruongquoc/person_service:v1.1
         name: person-service
         imagePullPolicy: Always
         env:
