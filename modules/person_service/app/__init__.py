@@ -2,16 +2,14 @@ from concurrent import futures
 
 import grpc
 from flask import Flask
-from flask_sqlalchemy import SQLAlchemy
+from .database import db
 
-from modules.person_service.app.udaconnect.services import PersonServicer
+from .udaconnect.services import PersonServicer
 from modules.shared.proto import person_pb2_grpc
-
-db = SQLAlchemy()
 
 
 def create_app(env=None):
-    from config import config_by_name
+    from .config import config_by_name
 
     app = Flask(__name__)
     app.config.from_object(config_by_name[env or "test"])
@@ -27,6 +25,6 @@ def create_app(env=None):
 
     return app
 
-
-if __name__ == "__main__":
-    create_app()
+#
+# if __name__ == "__main__":
+#     create_app()

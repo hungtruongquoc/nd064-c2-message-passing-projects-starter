@@ -1,7 +1,7 @@
 import logging
 
-from modules.person_service.app import db
-from modules.person_service.app.udaconnect.models import Person
+from ..database import db
+from .models import Person
 from modules.shared.proto import person_pb2
 from modules.shared.proto import person_pb2_grpc
 
