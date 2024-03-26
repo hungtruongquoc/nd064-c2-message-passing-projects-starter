@@ -9,7 +9,7 @@ from app.udaconnect.models import Connection, Location, Person
 from app.udaconnect.schemas import ConnectionSchema, LocationSchema, PersonSchema
 from geoalchemy2.functions import ST_AsText, ST_Point
 from sqlalchemy.sql import text
-from ..shared.proto import person_pb2, person_pb2_grpc
+from ....shared.proto import person_pb2, person_pb2_grpc
 
 logging.basicConfig(level=logging.INFO)
 logger = logging.getLogger("udaconnect-api")
