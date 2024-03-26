@@ -10,6 +10,7 @@ from app.udaconnect.schemas import ConnectionSchema, LocationSchema, PersonSchem
 from geoalchemy2.functions import ST_AsText, ST_Point
 from sqlalchemy.sql import text
 from ..shared.proto import person_pb2, person_pb2_grpc
+from google.protobuf.empty_pb2 import Empty
 
 logging.basicConfig(level=logging.INFO)
 logger = logging.getLogger("udaconnect-api")
@@ -137,7 +138,7 @@ class PersonService:
         logger.info("Retrieving all persons from gRPC call");
         with grpc.insecure_channel("person-service:5001") as channel:
             stub = person_pb2_grpc.PersonServiceStub(channel)
-            response = stub.GetPersonList(person_pb2.Empty())
+            response = stub.GetPersonList(Empty())
             logger.info('Response from gRPC call: %s', response.persons)
             persons = response.persons
             return persons
