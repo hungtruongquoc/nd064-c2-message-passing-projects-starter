@@ -31,7 +31,7 @@ spec:
         service: location-service
     spec:
       containers:
-      - image: hungtruongquoc/location_service:v1.0
+      - image: hungtruongquoc/location-service:1.0
         name: location-service
         imagePullPolicy: Always
         env:

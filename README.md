@@ -157,7 +157,7 @@ Your architecture diagram should focus on the services and how they talk to one 
 * To generate proto files for client and server run following command: `python -m grpc_tools.protoc -I./ --python_out=./ --grpc_python_out=./ ./person.proto`
 * To update a deployment: `kubectl set image deployment/person-service person-service=hungtruongquoc/person_service:v1.3`. Then apply the changes: `kubectl apply -f deployment/udaconnect-person-service.yaml`.
 * To build new image for api-service: `docker build -t hungtruongquoc/api_service:v1.1 .` run this at the folder: `modules/api`
-* To build new image for location-service: `docker build -t hungtruongquoc/location_service:v1.1 .` run this at the folder: `modules/location_service`
+* To build new image for location-service: `docker build -t hungtruongquoc/location_service:v1.1 .` run this at the folder: `modules/location_service`Then apply the changes: `kubectl apply -f deployment/udaconnect-location-service.yaml`.
 * To build person-service:  `docker build -f modules/person_service/Dockerfile -t hungtruongquoc/person_service:v1.6 .` run this at the root level of the project
 
 ## References
