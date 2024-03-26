@@ -20,7 +20,8 @@ def create_app(env=None):
     person_pb2_grpc.add_PersonServiceServicer_to_server(PersonServicer(), server)
 
     server.start()
-    server.add_insecure_port("[::]:5000")
+    # server.add_insecure_port("[::]:5000")
+    server.add_insecure_port("0.0.0.0:5000")
     server.wait_for_termination()
 
     return app
