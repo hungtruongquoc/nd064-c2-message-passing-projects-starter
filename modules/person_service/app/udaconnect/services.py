@@ -5,7 +5,7 @@ from .models import Person
 from modules.shared.proto import person_pb2
 from modules.shared.proto import person_pb2_grpc
 
-logging.basicConfig(level=logging.WARNING)
+logging.basicConfig(level=logging.INFO)
 logger = logging.getLogger("udaconnect-api-person-service")
 
 

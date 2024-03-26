@@ -11,7 +11,7 @@ from geoalchemy2.functions import ST_AsText, ST_Point
 from sqlalchemy.sql import text
 from modules.shared.proto import person_pb2, person_pb2_grpc
 
-logging.basicConfig(level=logging.WARNING)
+logging.basicConfig(level=logging.INFO)
 logger = logging.getLogger("udaconnect-api")
 
 

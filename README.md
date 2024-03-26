@@ -153,3 +153,4 @@ Your architecture diagram should focus on the services and how they talk to one 
 * The starter project uses Python Flask. Flask doesn't work well with `asyncio` out-of-the-box. Consider using `multiprocessing` to create threads for asynchronous behavior in a standard Flask application.
 * To generate proto files for client and server run following command: `python -m grpc_tools.protoc -I./ --python_out=./ --grpc_python_out=./ ./person.proto`
 * To update a deployment:  kubectl set image deployment/person-service person-service=hungtruongquoc/person_service:v1.3. Then apply the changes: kubectl apply -f deployment/udaconnect-person-service.yaml.
+* To build new image for api-service: docker build -f modules/api/Dockerfile -t hungtruongquoc/api_service:v1.1 ./modules/api
