@@ -1,0 +1,1 @@
+Endpoints: /api/locations with a POST request to create a new location triggers the communication with Kafka. Please refer to the Postman collection for more details.
