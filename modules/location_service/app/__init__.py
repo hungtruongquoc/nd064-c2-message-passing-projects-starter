@@ -17,6 +17,7 @@ db = SQLAlchemy()
 logging.basicConfig(level=logging.INFO)
 logger = logging.getLogger("udaconnect-api-location-service-start")
 
+
 def consume_messages(app: Flask):
     consumer = KafkaConsumer(TOPIC_NAME, bootstrap_servers=KAFKA_SERVER)
     for message in consumer:
@@ -52,6 +53,7 @@ def create_app(env=None):
     def health():
         return jsonify("healthy")
 
+    # Starts the Kafka consumer thread
     kafka_thread = threading.Thread(target=consume_messages, args=(app,))
     kafka_thread.daemon = True
     kafka_thread.start()
