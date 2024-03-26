@@ -136,7 +136,7 @@ class PersonService:
     @staticmethod
     def retrieve_all() -> List[Person]:
         logger.info("Retrieving all persons from gRPC call");
-        with grpc.insecure_channel("person-service:5001") as channel:
+        with grpc.insecure_channel("person-service:5000") as channel:
             stub = person_pb2_grpc.PersonServiceStub(channel)
             response = stub.GetPersonList(Empty())
             logger.info('Response from gRPC call: %s', response.persons)
