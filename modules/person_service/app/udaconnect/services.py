@@ -49,7 +49,7 @@ class PersonServicer(person_pb2_grpc.PersonServiceServicer):
             )
             person_list.people.append(person_message)
 
-            logger.info("Sending PersonList message")
+        logger.info("Sending PersonList message")
 
-            # Return the PersonList message
-            return person_list
+        # Return the PersonList message
+        return person_list
