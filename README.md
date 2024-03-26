@@ -80,8 +80,9 @@ Afterwards, you can test that `kubectl` works by running a command like `kubectl
 2. `kubectl apply -f deployment/db-secret.yaml` - Set up secrets for the pods
 3. `kubectl apply -f deployment/postgres.yaml` - Set up a Postgres database running PostGIS
 4. `kubectl apply -f deployment/udaconnect-api.yaml` - Set up the service and deployment for the API
-5. `kubectl apply -f deployment/udaconnect-app.yaml` - Set up the service and deployment for the web app
-6. `sh scripts/run_db_command.sh <POD_NAME>` - Seed your database against the `postgres` pod. (`kubectl get pods` will give you the `POD_NAME`)
+5. `kubectl apply -f deployment/udaconnect-person-service.yaml` - Set up the service and deployment for the Person service
+6. `kubectl apply -f deployment/udaconnect-app.yaml` - Set up the service and deployment for the web app
+7. `sh scripts/run_db_command.sh <POD_NAME>` - Seed your database against the `postgres` pod. (`kubectl get pods` will give you the `POD_NAME`)
 
 Manually applying each of the individual `yaml` files is cumbersome but going through each step provides some context on the content of the starter project. In practice, we would have reduced the number of steps by running the command against a directory to apply of the contents: `kubectl apply -f deployment/`.
 
@@ -151,3 +152,4 @@ Your architecture diagram should focus on the services and how they talk to one 
 * We can access a running Docker container using `kubectl exec -it <pod_id> sh`. From there, we can `curl` an endpoint to debug network issues.
 * The starter project uses Python Flask. Flask doesn't work well with `asyncio` out-of-the-box. Consider using `multiprocessing` to create threads for asynchronous behavior in a standard Flask application.
 * To generate proto files for client and server run following command: `python -m grpc_tools.protoc -I./ --python_out=./ --grpc_python_out=./ ./person.proto`
+* To update a deployment:  kubectl set image deployment/person-service person-service=hungtruongquoc/person_service:v1.3. Then apply the changes: kubectl apply -f deployment/udaconnect-person-service.yaml.

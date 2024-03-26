@@ -31,7 +31,7 @@ spec:
         service: person-service
     spec:
       containers:
-      - image: hungtruongquoc/person_service:v1.1
+      - image: hungtruongquoc/person_service:v1.4
         name: person-service
         imagePullPolicy: Always
         env:
