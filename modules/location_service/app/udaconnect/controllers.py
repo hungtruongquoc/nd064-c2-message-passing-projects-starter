@@ -11,6 +11,7 @@ from flask import request
 from flask_accepts import accepts, responds
 from flask_restx import Namespace, Resource
 from typing import Optional, List
+import logging
 
 DATE_FORMAT = "%Y-%m-%d"
 
@@ -18,7 +19,8 @@ api = Namespace("UdaConnect", description="Connections via geolocation.")  # noq
 
 
 # TODO: This needs better exception handling
-
+logging.basicConfig(level=logging.INFO)
+logger = logging.getLogger("udaconnect-api-location-controller-start")
 
 @api.route("/locations")
 @api.route("/locations/<location_id>")
@@ -28,10 +30,12 @@ class LocationResource(Resource):
     @responds(schema=LocationSchema)
     def post(self) -> str:
         request.get_json()
+        logger.info("Received in controller: %s", request.get_json());
+
         service = LocationService()
         # From here we want to send a message to kafka
-        message: str = service.create(request.get_json())
-        return message
+        item: Location = service.create(request.get_json())
+        return item
 
     @responds(schema=LocationSchema)
     def get(self, location_id) -> Location:

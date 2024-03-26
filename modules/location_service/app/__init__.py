@@ -17,7 +17,7 @@ db = SQLAlchemy()
 logging.basicConfig(level=logging.INFO)
 logger = logging.getLogger("udaconnect-api-location-service-start")
 
-def consume_messages():
+def consume_messages(app: Flask):
     consumer = KafkaConsumer(TOPIC_NAME, bootstrap_servers=KAFKA_SERVER)
     for message in consumer:
         logger.info("Received message: %s", message.value.decode('utf-8'))
@@ -25,14 +25,19 @@ def consume_messages():
         data: dict = json.loads(message.value.decode('utf-8'))
         logger.info(data.get('person_id'))
 
+        # Create a Flask test client
+        test_client = app.test_client()
+
+        # Construct a POST request to /locations endpoint
+        response = test_client.post('/api/locations', json=data)
+
+        logger.info("Result: %s", response)
+
+
 def create_app(env=None):
     import threading
     from app.config import config_by_name
     from app.routes import register_routes
-
-    kafka_thread = threading.Thread(target=consume_messages)
-    kafka_thread.daemon = True
-    kafka_thread.start()
 
     app = Flask(__name__)
     app.config.from_object(config_by_name[env or "test"])
@@ -46,5 +51,9 @@ def create_app(env=None):
     @app.route("/health")
     def health():
         return jsonify("healthy")
+
+    kafka_thread = threading.Thread(target=consume_messages, args=(app,))
+    kafka_thread.daemon = True
+    kafka_thread.start()
 
     return app
