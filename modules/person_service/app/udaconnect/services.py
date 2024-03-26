@@ -39,15 +39,15 @@ class PersonServicer(person_pb2_grpc.PersonServiceServicer):
 
             logger.info("Retrieved all persons from the database")
 
-            # For each person, create a Person protobuf message and add it to the PersonList message
-            for person in persons:
-                person_message = person_pb2.Person(
-                    id=person.id,
-                    first_name=person.first_name,
-                    last_name=person.last_name,
-                    company_name=person.company_name
-                )
-                person_list.persons.append(person_message)
+        # For each person, create a Person protobuf message and add it to the PersonList message
+        for person in persons:
+            person_message = person_pb2.Person(
+                id=person.id,
+                first_name=person.first_name,
+                last_name=person.last_name,
+                company_name=person.company_name
+            )
+            person_list.people.append(person_message)
 
             logger.info("Sending PersonList message")
 
