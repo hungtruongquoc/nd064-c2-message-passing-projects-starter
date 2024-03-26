@@ -139,6 +139,6 @@ class PersonService:
         with grpc.insecure_channel("person-service:5000") as channel:
             stub = person_pb2_grpc.PersonServiceStub(channel)
             response = stub.GetPersonList(Empty())
-            logger.info('Response from gRPC call: %s', response.persons)
-            persons = response.persons
+            logger.info('Response from gRPC call: %s', response.people)
+            persons = response.people
             return persons
