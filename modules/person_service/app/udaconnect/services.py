@@ -6,7 +6,7 @@ from modules.shared.proto import person_pb2
 from modules.shared.proto import person_pb2_grpc
 
 logging.basicConfig(level=logging.WARNING)
-logger = logging.getLogger("udaconnect-api")
+logger = logging.getLogger("udaconnect-api-person-service")
 
 
 class PersonServicer(person_pb2_grpc.PersonServiceServicer):
@@ -28,14 +28,14 @@ class PersonServicer(person_pb2_grpc.PersonServiceServicer):
                                  company_name=person.company_name)
 
     def GetPersonList(self, request, context):
-        # Extract the list of ids from the request
-        person_ids = request.ids
-
+        logger.info("Received request to get all persons from a gRPC call")
         # Query the database for persons with ids in the list
-        persons = db.session.query(Person).filter(Person.id.in_(person_ids)).all()
+        persons = db.session.query(Person).all()
 
         # Create a PersonList message
         person_list = person_pb2.PersonList()
+
+        logger.info("Retrieved all persons from the database")
 
         # For each person, create a Person protobuf message and add it to the PersonList message
         for person in persons:
@@ -46,6 +46,8 @@ class PersonServicer(person_pb2_grpc.PersonServiceServicer):
                 company_name=person.company_name
             )
             person_list.persons.append(person_message)
+
+        logger.info("Sending PersonList message")
 
         # Return the PersonList message
         return person_list
