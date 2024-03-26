@@ -15,7 +15,7 @@ from ..shared.proto import person_pb2, person_pb2_grpc
 from google.protobuf.empty_pb2 import Empty
 
 logging.basicConfig(level=logging.INFO)
-logger = logging.getLogger("udaconnect-api")
+logger = logging.getLogger("udaconnect-api-location-service")
 
 TOPIC_NAME = 'locations'
 KAFKA_SERVER = 'kafka-service:9092'
@@ -126,7 +126,7 @@ class LocationService:
         new_location.coordinate = ST_Point(location["latitude"], location["longitude"])
 
         # Serialize the location dictionary to JSON
-        message = json.dumps(location).encode('utf-8')
+        message = json.dumps(new_location).encode('utf-8')
 
         self.send_message(message)
 

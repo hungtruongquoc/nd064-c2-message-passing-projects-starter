@@ -57,6 +57,13 @@ class Location(db.Model):
         coord_text = self.wkt_shape
         return coord_text[coord_text.find("(") + 1 : coord_text.find(" ")]
 
+    def to_dict(self) -> dict:
+        return {
+            "person_id": self.person_id,
+            "id": self.id,
+            "coordinate": self.coordinate,
+            "creation_time": self.creation_time
+        }
 
 @dataclass
 class Connection:
