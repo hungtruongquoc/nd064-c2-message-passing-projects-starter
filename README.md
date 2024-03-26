@@ -154,3 +154,4 @@ Your architecture diagram should focus on the services and how they talk to one 
 * To generate proto files for client and server run following command: `python -m grpc_tools.protoc -I./ --python_out=./ --grpc_python_out=./ ./person.proto`
 * To update a deployment:  kubectl set image deployment/person-service person-service=hungtruongquoc/person_service:v1.3. Then apply the changes: kubectl apply -f deployment/udaconnect-person-service.yaml.
 * To build new image for api-service: docker build -f modules/api/Dockerfile -t hungtruongquoc/api_service:v1.1 ./modules/api
+* To build person-service:  docker build -f modules/person_service/Dockerfile -t hungtruongquoc/person_service:v1.6 .
