@@ -112,34 +112,25 @@ class LocationService:
         location.wkt_shape = coord_text
         return location
 
-    def create(self, location: Dict) -> str:
+    def create(self, location: Dict) -> Location:
         validation_results: Dict = LocationSchema().validate(location)
         if validation_results:
             logger.warning(f"Unexpected data format in payload: {validation_results}")
             raise Exception(f"Invalid payload: {validation_results}")
 
-        logger.info("Sending message to Kafka ...")
+        logger.info("Constructing Location model ...")
 
         new_location = Location()
         new_location.person_id = location["person_id"]
         new_location.creation_time = location["creation_time"]
         new_location.coordinate = ST_Point(location["latitude"], location["longitude"])
 
-        # Serialize the location dictionary to JSON
-        message = json.dumps(new_location).encode('utf-8')
+        db.session.add(new_location)
+        db.session.commit()
 
-        self.send_message(message)
+        logger.info("Completed inserting new location to database")
 
-        # new_location = Location()
-        # new_location.person_id = location["person_id"]
-        # new_location.creation_time = location["creation_time"]
-        # new_location.coordinate = ST_Point(location["latitude"], location["longitude"])
-        # db.session.add(new_location)
-        # db.session.commit()
-
-        logger.info("Completed sending message to Kafka")
-
-        return "Submitted successfully"
+        return new_location
 
 
 class PersonService:

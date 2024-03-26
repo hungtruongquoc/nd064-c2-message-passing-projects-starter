@@ -3,6 +3,7 @@ from flask_cors import CORS
 from flask_restx import Api
 from flask_sqlalchemy import SQLAlchemy
 import logging
+import json
 from flask import Flask, jsonify
 from kafka import KafkaConsumer
 
@@ -19,10 +20,10 @@ logger = logging.getLogger("udaconnect-api-location-service-start")
 def consume_messages():
     consumer = KafkaConsumer(TOPIC_NAME, bootstrap_servers=KAFKA_SERVER)
     for message in consumer:
+        logger.info("Received message: %s", message.value.decode('utf-8'))
         # Process the message as needed
-        logger.info(message.value.decode('utf-8'))
-        print(message.value.decode('utf-8'))  # For example, print the message to console
-
+        data: dict = json.loads(message.value.decode('utf-8'))
+        logger.info(data.get('person_id'))
 
 def create_app(env=None):
     import threading
