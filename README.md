@@ -81,10 +81,11 @@ Afterwards, you can test that `kubectl` works by running a command like `kubectl
 3. `kubectl apply -f deployment/postgres.yaml` - Set up a Postgres database running PostGIS
 4. `kubectl apply -f deployment/udaconnect-api.yaml` - Set up the service and deployment for the API
 5. `kubectl apply -f deployment/udaconnect-person-service.yaml` - Set up the service and deployment for the Person service
-6. `kubectl apply -f deployment/udaconnect-app.yaml` - Set up the service and deployment for the web app
-7. `sh scripts/run_db_command.sh <POD_NAME>` - Seed your database against the `postgres` pod. (`kubectl get pods` will give you the `POD_NAME`)
-8. `kubectl apply -f deployment/udaconnect-zookeper.yml` - Set up the zookeeper service
-9. `kubectl apply -f kafka-deployment.yml` - Set up the kafka service
+6. `kubectl apply -f deployment/udaconnect-location-service.yaml` - Set up the service and deployment for the Location service
+7. `kubectl apply -f deployment/udaconnect-app.yaml` - Set up the service and deployment for the web app
+8. `sh scripts/run_db_command.sh <POD_NAME>` - Seed your database against the `postgres` pod. (`kubectl get pods` will give you the `POD_NAME`)
+9. `kubectl apply -f deployment/udaconnect-zookeper.yml` - Set up the zookeeper service
+10. `kubectl apply -f kafka-deployment.yml` - Set up the kafka service
 
 
 Manually applying each of the individual `yaml` files is cumbersome but going through each step provides some context on the content of the starter project. In practice, we would have reduced the number of steps by running the command against a directory to apply of the contents: `kubectl apply -f deployment/`.
