@@ -1,0 +1,39 @@
+{
+	"info": {
+		"_postman_id": "f6b98ad9-1608-4016-b9bd-cd9fd68a592d",
+		"name": "Udacity Native Cloud",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "1658811"
+	},
+	"item": [
+		{
+			"name": "Create a Location",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"person_id\": 6,\r\n    \"creation_time\": \"2021-08-15 10:37:06.000000\",\r\n    \"latitude\": \"-122.290524\",\r\n    \"longitude\": \"37.553441\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:30001/api/locations",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "30001",
+					"path": [
+						"api",
+						"locations"
+					]
+				}
+			},
+			"response": []
+		}
+	]
+}
