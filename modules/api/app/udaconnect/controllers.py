@@ -28,6 +28,7 @@ class LocationResource(Resource):
     @responds(schema=LocationSchema)
     def post(self) -> Location:
         request.get_json()
+        # From here we want to send a message to kafka
         location: Location = LocationService.create(request.get_json())
         return location
 

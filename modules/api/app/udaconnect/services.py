@@ -2,6 +2,7 @@ import logging
 from datetime import datetime, timedelta
 from typing import Dict, List
 import grpc
+import kafka
 
 
 from app import db
@@ -14,6 +15,9 @@ from google.protobuf.empty_pb2 import Empty
 
 logging.basicConfig(level=logging.INFO)
 logger = logging.getLogger("udaconnect-api")
+
+TOPIC_NAME = 'items'
+KAFKA_SERVER = 'kafka-service:9092'
 
 
 class ConnectionService:
