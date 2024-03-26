@@ -1,0 +1,30 @@
+syntax = "proto3";
+
+//package person;
+
+// Defines a Person message
+message Person {
+  int32 id = 1;
+  string first_name = 2;
+  string last_name = 3;
+  string company_name = 4;
+}
+
+message PersonIdList {
+  repeated int32 ids = 1;
+}
+
+message PersonId {
+    int32 id = 1;
+
+}
+
+message PersonList {
+  repeated Person people = 1;
+}
+
+service PersonService {
+  rpc Create(Person) returns (Person);
+  rpc GetPerson(PersonId) returns (Person);
+  rpc GetPersonList(PersonIdList) returns (PersonList);
+}
