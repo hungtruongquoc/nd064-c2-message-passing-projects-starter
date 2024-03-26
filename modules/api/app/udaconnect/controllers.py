@@ -26,11 +26,12 @@ api = Namespace("UdaConnect", description="Connections via geolocation.")  # noq
 class LocationResource(Resource):
     @accepts(schema=LocationSchema)
     @responds(schema=LocationSchema)
-    def post(self) -> Location:
+    def post(self) -> str:
         request.get_json()
+        service = LocationService()
         # From here we want to send a message to kafka
-        location: Location = LocationService.create(request.get_json())
-        return location
+        message: str = service.create(request.get_json())
+        return message
 
     @responds(schema=LocationSchema)
     def get(self, location_id) -> Location:

@@ -1,8 +1,9 @@
+import json
 import logging
 from datetime import datetime, timedelta
 from typing import Dict, List
 import grpc
-import kafka
+from kafka import KafkaProducer
 
 
 from app import db
@@ -16,7 +17,7 @@ from google.protobuf.empty_pb2 import Empty
 logging.basicConfig(level=logging.INFO)
 logger = logging.getLogger("udaconnect-api")
 
-TOPIC_NAME = 'items'
+TOPIC_NAME = 'locations'
 KAFKA_SERVER = 'kafka-service:9092'
 
 
@@ -90,6 +91,15 @@ class ConnectionService:
 
 
 class LocationService:
+    def __init__(self):
+        self.kafka_server = KAFKA_SERVER
+        self.topic_name = TOPIC_NAME
+        self.producer = KafkaProducer(bootstrap_servers=self.kafka_server)
+
+    def send_message(self, message: str):
+        self.producer.send(self.topic_name, message)
+        self.producer.flush()
+
     @staticmethod
     def retrieve(location_id) -> Location:
         location, coord_text = (
@@ -102,21 +112,34 @@ class LocationService:
         location.wkt_shape = coord_text
         return location
 
-    @staticmethod
-    def create(location: Dict) -> Location:
+    def create(self, location: Dict) -> str:
         validation_results: Dict = LocationSchema().validate(location)
         if validation_results:
             logger.warning(f"Unexpected data format in payload: {validation_results}")
             raise Exception(f"Invalid payload: {validation_results}")
 
+        logger.info("Sending message to Kafka ...")
+
         new_location = Location()
         new_location.person_id = location["person_id"]
         new_location.creation_time = location["creation_time"]
         new_location.coordinate = ST_Point(location["latitude"], location["longitude"])
-        db.session.add(new_location)
-        db.session.commit()
 
-        return new_location
+        # Serialize the location dictionary to JSON
+        message = json.dumps(location).encode('utf-8')
+
+        self.send_message(message)
+
+        # new_location = Location()
+        # new_location.person_id = location["person_id"]
+        # new_location.creation_time = location["creation_time"]
+        # new_location.coordinate = ST_Point(location["latitude"], location["longitude"])
+        # db.session.add(new_location)
+        # db.session.commit()
+
+        logger.info("Completed sending message to Kafka")
+
+        return "Submitted successfully"
 
 
 class PersonService:
