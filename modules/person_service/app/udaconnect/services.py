@@ -8,9 +8,11 @@ from modules.shared.proto import person_pb2_grpc
 logging.basicConfig(level=logging.INFO)
 logger = logging.getLogger("udaconnect-api-person-service")
 
+
 class PersonServicer(person_pb2_grpc.PersonServiceServicer):
     def __init__(self, flaskApp):
         self.app = flaskApp  # Store the Flask app
+
     def Create(self, request, context):
         new_person = Person()
         new_person.first_name = request.first_name
